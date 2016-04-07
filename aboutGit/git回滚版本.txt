@@ -1,0 +1,168 @@
+git 回滚版本
+一般是这样回滚的：
+git branch master_newbackup   	// 先备份到一个新分支
+git log -3            		// 找到要回滚的版本,前3个版本
+git reset --hard 版本号		// 回滚
+git reflog 			// 查看回滚日志
+git reset --hard 451bcc0	//我们要找回我们第二commit，只需要做如回滚的回退
+
+
+******************依次做*************************************
+
+
+git add -u 					(add all update before commit)
+git add tomcat/webapps/share 					(add new file)
+
+tar czf `date '+%Y%m%d'peter`.tgz `git diff --name-only`         打包新修改
+-- export changed files and compress to tgz file
+-- this command should be run before run the following two commands
+
+
+
+git commit -m "update main page by peter"	(commit with a message)
+git log -2 					(查最近两次的SHA)
+
+
+
+
+
+git branch master_beforeedit
+git reset --hard 8c612fdce9996a62ed07c255c9fea35db110f065 (XXX版本号)
+
+git reflog
+git reset --hard XXX
+
+
+
+范例一：将整个 /etc 目录下的文件全部打包成为 /tmp/etc.tar
+[root@linux ~]# tar -cvf /tmp/etc.tar /etc     ==仅打包，不压缩！
+[root@linux ~]# tar -zcvf /tmp/etc.tar.gz /etc ==打包后，以 gzip 压缩
+[root@linux ~]# tar -zcvf /tmp/etc.tgz   /etc  ==打包后，以 gzip 压缩
+范例二：查阅上述 /tmp/etc.tar.gz 文件内有哪些文件？
+[root@linux ~]# tar -ztvf /tmp/etc.tar.gz
+# 由於我们使用 gzip 压缩，所以要查阅该 tar file 内的文件时，
+# 就得要加上 z 这个参数了！这很重要的！
+范例三：将 /tmp/etc.tar.gz 文件解压缩在 /usr/local/src 底下
+[root@linux ~]# cd /usr/local/src
+[root@linux src]# tar -zxvf /tmp/etc.tar.gz
+范例四：在 /tmp 底下，我只想要将 /tmp/etc.tar.gz 内的 etc/passwd 解开而已
+[root@linux ~]# cd /tmp
+[root@linux tmp]# tar -zxvf /tmp/etc.tar.gz etc/passwd
+# 我可以透过 tar -ztvf 来查阅 tarfile 内的文件名称，如果单只要一个文件，
+# 就可以透过这个方式来下达！注意到！ etc.tar.gz 内的根目录 / 是被拿掉了！
+范例五：将 /etc/ 内的所有文件备份下来，并且保存其权限！
+[root@linux ~]# tar -zxvpf /tmp/etc.tar.gz /etc
+# 这个 -p 的属性是很重要的，尤其是当您要保留原本文件的属性时！
+范例六：在 /home 当中，比 2005/06/01 新的文件才备份
+[root@linux ~]# tar -N ‘2005/06/01′ -zcvf home.tar.gz /home
+范例七：我要备份 /home, /etc ，但不要 /home/dmtsai
+[root@linux ~]# tar –exclude /home/dmtsai -zcvf myfile.tar.gz /home/* /etc
+   .tar
+　　解包：tar xvf FileName.tar
+　　打包：tar cvf FileName.tar DirName
+　　（注：tar是打包，不是压缩！）
+　　———————————————
+　　.gz
+　　解压1：gunzip FileName.gz
+　　解压2：gzip -d FileName.gz
+　　压缩：gzip FileName
+　　.tar.gz 和 .tgz
+　　解压：tar zxvf FileName.tar.gz
+　　压缩：tar zcvf FileName.tar.gz DirName
+
+
+
+
+
+
+git reset是指将当前head的内容重置，不会留log信息。
+    git reset HEAD filename  从暂存区中移除文件
+    git reset –hard HEAD~3  会将最新的3次提交全部重置，就像没有提交过一样。
+    git reset –hard commit (38679ed709fd0a3767b79b93d0fba5bb8dd235f8) 回退到 38679ed709fd0a3767b79b93d0fba5bb8dd235f8 版本
+
+
+
+git reset –mixed 此为默认方式，不带任何参数的git reset，这种方式，它回退到某个版本，只保留源码，回退commit和index信息
+git reset –soft：回退到某个版本，只回退了commit的信息，不会恢复到index file一级。如果还要提交，直接commit即可
+git reset –hard：彻底回退到某个版本，本地的源码也会变为上一个版本的内容
+
+
+1 git reset –soft 	只撤销commit，保留working tree和index file。
+2 git reset –hard 	撤销commit、index file和working tree，即撤销销毁最近一次的commit
+3 git reset –mixed 	撤销commit和index file，保留working tree
+4 git reset 		和git reset –mixed完全一样
+5 git reset – 		用于删除登记在index file里的某个文件。
+
+
+一般是这样回滚的：
+git branch backup
+// 先备份到一个新分支
+git log
+// 找到要回滚的版本
+git reset --hard 版本号
+// 回滚
+
+完成后如果发现有问题，再利用之前的备份分支，没问题就删之。
+
+
+不久之前，我在做一些大动作（rebasing）之前，我总是备份整个版本库，以防万一。
+直到最近我才发现git的历史记录是不可修改的，也就是说你不能更改任何已经发生的事情。
+你做的任何操作都只是在原来的操作上修改。也就是说，即使你删除了一个分支，修改了一个提交，或者强制重置，你仍然可以回滚这些操作。
+
+你现在看git的历史记录，你可以看到两次提交：
+$ git log
+* 98abc5a (HEAD, master) more stuff added to foo
+* b7057a9 initial commit
+
+现在让我们来重置回第一次提交的状态：
+$ git reset --hard b7057a9
+$ git log
+* b7057a9 (HEAD, master) initial commit
+
+这看起来我们是丢掉了我们第二次的提交，没有办法找回来了。但是 reflog 就是用来解决这个问题的。简单的说，它会记录所有HEAD的历史，也就是说当你做 reset，checkout等操作的时候，这些操作会被记录在reflog中。
+
+
+$ git reflog
+b7057a9 HEAD@{0}: reset: moving to b7057a9
+98abc5a HEAD@{1}: commit: more stuff added to foo
+b7057a9 HEAD@{2}: commit (initial): initial commit
+
+所以，我们要找回我们第二commit，只需要做如下操作：
+$ git reset --hard 98abc5a
+
+再来看一下 git 记录：
+$ git log
+* 98abc5a (HEAD, master) more stuff added to foo
+* b7057a9 initial commit
+
+所以，如果你因为reset等操作丢失一个提交的时候，你总是可以把它找回来。除非你的操作已经被git当做垃圾处理掉了，一般是30天以后。
+
+
+
+
+====================================== 回滚远程git库
+git 版本出错了,如何回滚到之前某一个版本,思路是本地回滚到之前某个版本,然后把远程分支删除,然后以本地的回滚版本重新建立分支
+
+
+#新建old_master分支做备份   
+>git branch old_master   
+
+
+#push到远程   
+>git push origin old_master:old_master   
+
+
+#本地仓库回退到某个版本   
+>git reset --hard baeertasdasdvf
+
+
+#删除远程的master分支   
+>git push origin :master   
+
+
+#重新创建master分支   
+>git push origin master  
+
+
+# 重新clone代码
+>git clone git@192.168.10.201:xxx.git

@@ -1,0 +1,115 @@
+﻿# 以'#'开始的行，被视为注释.
+# 1.gitignore文件对其所在的目录及所在目录的全部子目录均有效。
+# vim pro/.gitignore # pro是專案名稱, 用這個的好處是, 將 .gitignore commit 進去, 此 .gitignore 可以隨著專案到處走. (Git 管理的 Project 目錄下)
+# 通过将.gitignore文件添加到仓库，其他开发者更新该文件到本地仓库，以共享同一套忽略规则。
+# 2通过配置.git/info/exclude文件来忽略文件。这种方式对仓库全局有效，只能对自己本地仓库有作用
+# 3通过.git/config配置文件的core. Excludesfile选项指定一个忽略规则文件（完整路径文件名可以任意取）
+
+
+# 忽略所有.o和 .a文件.
+*.[oa]
+
+# 忽略掉所有下列的文件夹.
+/tomcat/bin
+/tomcat/conf
+/tomcat/endorsed
+/tomcat/lib
+/tomcat/logs
+/tomcat/shared
+/tomcat/temp
+/tomcat/work
+
+# 忽略掉所有文件名后缀是下列的文件.
+*.bak
+*.bat
+*.log
+*.tmp
+# test.log是手工维护的，所以例外.
+!test.log
+
+
+# 只忽略.git目录，不忽略.git文件
+.git/
+!.git
+
+
+
+
+
+**************************************************
+我做mtk项目用到的 .gitignore 文件的具体配置如下：
+#######开放模式############
+
+###############
+# 
+   folder   #
+###############
+/_souceInsight_/
+/build/
+/MoDIS/
+/Doc/
+/mtk_lib/
+/scripts/
+/header_temp/
+/tools/AudioResGen/
+/tools/GLBOptionSwtichRef/
+/tools/GMSL/
+/tools/MinGW/
+/tools/MSYS/
+/tools/NewMMIResourceTool/
+/tools/NVRAMStatistic/
+/tst/
+/verno/
+/plutommi/tool/
+/plutommi/Customer/ResGenerator/
+/plutommi/Customer/CustResource/
+/plutommi/Customer/LcdResource/
+/plutommi/Customer/Images/
+/plutommi/mmi/Framework/EventHandling/EventsInc/mmi_menu_handlers.h
+/vendor/font/MTK/official/project/plutommi/content/inc/
+/vendor/font/MTK/official/project/plutommi/content/src/
+
+###############
+#  fixed file #
+###############
+.gitignore
+*.exe
+*.txt
+*.def
+*.dsp
+*.lib
+*.doc
+*.dll
+*.lnt
+*.pm
+*.xls
+*.dbg
+*.DBG
+*.o
+*.plg
+*.keep
+
+
+###############
+#  temp file  #
+###############
+~*
+*.log
+*.cmm
+*.men
+*.ini
+*.fig
+*.cmp
+*.tmp
+
+###############
+#    script   #
+###############
+*.bat
+
+#########保守模式############
+!/plutommi/Customer/CustResource/PLUTO_MMI/
+!/plutommi/Customer/LcdResource/MainLcd128X160/
+!/plutommi/Customer/Images/PLUTO128X160/image.zip
+!/vendor/font/MTK/official/project/plutommi/content/inc/MainLcd128X160/
+!/vendor/font/MTK/official/project/plutommi/content/src/MainLcd128X160/

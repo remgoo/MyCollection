@@ -1,0 +1,503 @@
+tar czf `date '+%Y%m%d'peter`.tgz `git diff --name-only`
+-- export changed files and compress to tgz file
+-- this command should be run before run the following two commands
+
+
+git add -u 					(add all update before commit)
+git commit -m "update main page by peter"	(commit with a message)
+git log
+git log -2 					(查最近两次的SHA)
+
+*************************
+h、比较上次提交commit和上上次提交
+    git diff HEAD^ HEAD
+
+i、比较两个历史版本之间的差异
+    git diff SHA1 SHA2
+
+git log -2 (查最近两次的SHA)
+
+git diff HEAD^ HEAD --name-only（查最近两次的不同文件）
+
+打包两个SHA间不同的文件
+tar czf `date '+%Y%m%d'`.tgz `git diff 8c612fdce9996a62ed07c255c9fea35db110f065 3e3b569dd77b85c19077ca66eb340ff7f933ca1a --name-only`
+*************************
+
+git add tomcat/webapps/share
+git status
+git rm --cached test.log
+git rm --cached tomcat/webapps/share/WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/\*.bak
+移除目录下的所有暂存文件（无递归）： $ git rm --cached log/*.log
+移除目录下的所有暂存文件（递归）：   $ git rm --cached tomcat/\*.bak
+
+如果已经提交 commit 已經將 folder/history.log commit 進去了, 所以每次它都會去檢查, 造成都出現 modified 的狀況.
+移除方法：
+git rm -f folder/history.log
+git commit # 即可
+
+（---插一句：主要是如果想利用.gitignore的过滤功能过滤文件，则必须不能将文件提交到git仓库中后再建立此文件，如果在设定过滤法则之前将文件提交过，则过滤功能将不再生效，所以必须在文件提交之前设定过滤规则。---）
+
+如果要添加一个规则忽略的文件可以用强制添加
+git add -f folder/history.log
+
+
+
+提交前一定要先打包本次修改的不同文件
+tar czf `date '+%Y%m%d'peter`.tgz `git diff --name-only`
+
+
+
+
+
+
+
+
+修改某个文件的代码，git add并且git commit之后，要撤销到未修改之前的状态，应该怎么操作？
+因为还没有提交，所以刚刚提交的文件还在暂存区，checkout是把这个文件从暂存区中拿出来，不提交入库。
+
+如果还没有提交执行git checkout -- [文件名]，
+如果已经提交执行git reset [前一个提交]，再重新提一次。
+如果已经推到远程库就只能git revert 再提一次了。
+移除跟踪
+git rm --cached test.log
+
+
+
+跟踪一个新文件：                 $ git add readme.txt
+说明： 
+1） 跟踪之后，该文件状态是“已暂存”的。 （Changes to be committed:）
+2）修改一个已暂存的文件，该文件会出现在两个记录区中。
+3） 如果跟踪错了，想把他删除（不删除工作区的），则用 git rm --cached readme.txt。
+状态变成“未跟踪”，如果该文件已经修改了，则加  -f 参数强行删除暂存区的文件（已修改的文件不被覆盖）。
+跟踪一组新文件：                 $ git add *.txt
+跟踪一个目录中的所有文件：       $ git add mydir
+说明：如果该目录下有子目录，则进行递归操作。
+修改之后，暂存一个文件：                           $ git add readme.txt
+说明：取消已暂存的文件（已暂存到已修改）：         $ git reset HEAD readme.txt
+也可以直接使用 git rm 删除文件，但如何文件处于“已修改” 则需要加 -f
+移除已跟踪文件，恢复到“未跟踪”       $ git rm --cached A.java
+说明：如果文件已修改，则需 -f ，并且不覆盖修改过的内容。 
+强行移除修改后文件(从暂存区和工作区中删除)：      $ git rm -f a.a 
+移除目录下的所有文件（递归）：                    $ git rm log/\*.log
+移除目录下的所有文件（无递归）：                  $ git rm log/*.log
+
+
+
+
+git add  tomcat
+今天 当我  执行  git add  somefile 的时候，出现 如下 错误：
+If no other git process is currently running, this probably means a
+git process crashed in this repository earlier. Make sure no other git
+process is running and remove the file manually to continue.
+解决方法：
+rm -f ./.git/index.lock
+
+
+
+
+
+
+
+
+
+
+
+
+
+*************************************************
+命令行里git的命令列表以及解释：
+git clone <address>：复制代码库到本地。
+git add <file> ...：添加文件到代码库中。
+git add . //这个可以把所以文件和文件夹都放入提交缓存中,"."表示全部
+git rm <file> ...：删除代码库的文件。
+git commit -m <message>：提交更改，在修改了文件以后，使用这个命令提交修改。
+git pull：从远程同步代码库到本地。
+git push：推送代码到远程代码库。
+git branch：查看当前分支。带*是当前分支。
+git branch <branch-name>：新建一个分支。
+git branch -d <branch-name>：删除一个分支。
+git checkout <branch-name>：切换到指定分支。
+git log：查看提交记录（即历史的 commit 记录）。
+git status：当前修改的状态，是否修改了还没提交，或者那些文件未使用。
+git reset <log>：恢复到历史版本。
+
+之前初学过一点git版本控制工具，利用github做仓库，照着github上的文档练习的了一下。不过那只篇只是照虎画猫（我的水平只能照着老虎画个猫模样，嘻嘻！）。
+最近在学hibernate，公司与家之间都要调用我练习的小项目，交给git/github来管理，我只想说真的爽歪歪了。
+本文在我之前的那篇《git/github学习笔记》的基础上，属于那个的升级加强版，欢迎对照阅读：http://www.cnblogs.com/fnng/archive/2011/08/25/2153807.html
+如果本文有不太明白的地方请参考上面的文章。
+
+ 
+
+Github: git项目托管网站，请先免费申请一个github帐号：www.github.com
+
+Git:分布式版本控制工具，http://d.download.csdn.net/down/3169511/z_y_liu89
+
+ 
+
+Github的申请与git的安装我这里就不说了。这个不难。
+
+
+*****************************
+
+
+
+
+
+
+
+
+使用
+git log -p -- packages/apps/Mms/src/com/android/mms/ui/ManageSimMessages.java
+会显示所有的这个文件的提交.我只要显示这次的，
+其实就是如何在git log中使用用哈希值12e49a..
+
+Git如何查看某次提交某个文件的修改
+git show 某次的提交哈希值 文件名
+例如（针对你的情况）：
+git show 12e49a7720fe92d5c19a8015fbc40a410e52370d .../src/com/android/mms/ui/ManageSimMessages.java
+
+
+
+
+比如 --stat，仅简要的显示文件增改行数统计，每个提交都列出了修改过的文件，以及其中添加和移除的行数，并在最后列出所有增减行数小计。
+ git log --stat
+ git log -2 --stat
+
+在做代码审查，或者要快速浏览其他协作者提交的更新都作了哪些改动时，就可以用这个选项。此外，还有许多摘要选项可以用，比如 --stat，仅显示简要的增改行数统计：
+git log --stat commit 3e3b569dd77b85c19077ca66eb340ff7f933ca1a
+
+
+
+
+注意：用 git status 查看目前所有文件的状态。
+GIT 配置：
+三种配置范围类型：
+1）所有用户 --system，   存在 /etc/gitconfig 文件中。(对windows来说，是 msysgit 的安装目录)
+2）本用户 --global，    存在 ~/.gitconfig  文件中。（对windows 来说，是 C:\Documents and Settings\$USER）
+3）本项目               存在 .git/config 文件中。
+注意：后面的重载前面的。例如：用--global设置，可以在所有项目中使用这个设置；如果有一个项目你想使用一个特别的设置，就可以使用不带参数的 git config 重新设置，则它只作用于这个项目。如果用 git config --list 查看这些设置，可能会列出多个，但最后那个起作用。
+用户信息
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
+文本编辑器
+$ git config --global core.editor emacs
+查看配置信息
+$ git config --list
+或者只看一个信息：
+$ git config <key>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+（推荐书：Pro Git 简体中文版.pdf http://www.open-open.com/doc/view/d53f762f1abb4a31b3c1e13393c8ae09）
+Git最常用命令：
+获取远程服务器的源代码
+git clone http://Project
+
+
+提交本地修改到远程服务器
+1
+git add xxx.java
+
+2
+git commit -m '修改xxx.java文件'
+
+3
+git push
+
+从远程服务器更新源代码
+git pull
+
+*********
+Git比较常用命令：
+对比未提交已暂存的文件的差异
+git diff --cached
+或
+git diff --staged
+
+ 
+
+对比已修改未暂存文件的差异
+git diff
+
+ 
+
+忽略文件
+.gitignore文件中指定
+
+提交所有的更改
+git commit -a -m '提交说明'
+
+修正上一次提交
+git commit --amend -m '提交说明'
+
+从本地仓库溢出，但不删除文件
+rm --cached 1.txt
+
+从本地仓库移除并删除文件
+rm 1.txt
+
+如果已经提交到暂存区使用
+rm -f 1.txt
+
+移动文件
+mv file_form file_to
+
+查看最近两次提交记录
+git log -2
+
+查看最近两周提交记录
+git log --since=2.weeks
+
+图形查看分支和提交
+git log --graph
+
+撤销添加到暂存区
+git reset HEAD 1.txt
+
+
+撤销文件的修改
+git checkout -- 1.txt
+
+
+*************
+远程仓库操作：
+
+git clone git://yyyy.com/abc.git localname
+克隆默认使用origin作为远程仓库的名字，用master作为分支的名字
+
+查看本地仓库的对应的远程库
+git remote 
+git remote -v
+
+添加远程仓库
+git remote add [shortname] [url]
+
+从远程抓取更新，并不合并
+git fetch [shortname]
+
+从远程抓取更新并合并到本地当前分支
+git pull [shortname]
+
+
+推送分支到远程仓库
+git push origin master
+
+第一次推送的时候要添加远程的代码库到配置
+git remote add origin master https://github.com/zhong635725959/droplook.git
+origin可变，随自己喜欢
+
+显示远程仓库的变化
+git remote show origin
+
+修改远程仓库的名称
+git remote rename oldname newname
+
+移除远端仓库
+git remote rm [shortname]
+
+*************
+标签操作：
+列出标签
+git tag
+git tag -l 'v1.4.2.*'
+
+新建标签
+git tag -a v1.4 -m 'my version 1.4'
+git tag -s v1.5 -m 'my signed 1.5 tag'
+
+ 
+
+补加标签给某次提交
+git tag -a v1.2 9fceb02
+
+ 
+
+显示某个版本
+git show v1.5
+
+ 
+
+分享标签
+git push origin [tagname]
+
+ 
+
+分享所有新增标签
+git push origin --tags
+
+
+************
+分支操作：
+
+列出分支
+git branch
+
+ 
+
+列出各分支最后一次提交
+git branch -v
+
+ 
+
+列出已经合并的分支
+git branch --merged
+
+ 
+
+列出未合并的分支
+git branch --no-merged
+
+ 
+
+创建分支
+git branch branch1
+
+git branch master_backup
+
+ 
+
+切换到分支
+git checkout branch1
+
+ 
+
+创建并切换到分支
+git checkout -b branch2
+
+ 
+
+合并分支
+git merge 要并入当前分支的其他分支
+例如 git merge iss4
+
+ 
+
+删除分支
+git branch -d branch1
+
+ 
+
+强制删除未合并的分支
+git branch -D branch1
+
+
+*************
+远程分支操作：
+
+推送分支到远程仓库，远程分支命名为 awesomebranch
+git push orgin servserfix:awesomebranch
+
+ 
+
+合并远程某一分支到本地当前分支
+git merge orgin/serverfix
+
+ 
+
+从远程分支分化出一个新分支，并切换过去
+git checkout -b myserverfix origin/serverfix
+git checkout --track origin/serverfix
+
+ 
+
+删除远程分支
+git push origin :serverfix
+
+
+*****************************
+
+
+
+
+
+git init
+不小心在一个目录下执行了 git init ，然后怎么都还原不了了，想请求一下怎么才能还原为一受git控制的目录
+
+git的控制文件都在 .git中，只要删除这个文件目录就好了。找到需要删除的.git所在目录，然后  
+rm -rf .git
+
+
+
+
+git add name.file
+git add /folder/...
+
+
+git diff
+
+git status
+
+git commit -m 'desc version'
+
+git commit -u
+
+
+移除跟踪
+git rm --cached log/\*.log
+git rm \*~
+
+移动文件，
+要在 Git 中对文件改名
+git mv file_from file_to
+
+
+查看提交历史 
+git log
+
+ 
+撤消修改最后一次提交,想要撤消刚才的提交操作
+git commit --amend
+
+取消已经暂存的文件
+git reset HEAD c.txt
+
+取消对文件的修改
+git checkout
+
+
+
+
+远程仓库的使用
+要参与任何一个 Git 项目的协作，必须要了解该如何管理远程仓库。
+
+
+
+打标签
+列显已有的标签
+列出现有标签的命令非常简单，直接运行 git tag 即可：
+git tag
+
+
+新建标签
+git tag v1.0
+
+
+
+
+conflict:
+ 
+git merge               用于合并两个分支。
+git diff                如果有冲突，直接使用diff查看，
+                        冲突代码用<<<和>>>表示。手动修改冲突代码。
+git update-index        更新修改后的文件状态。
+git commit -a -e        提交为解决冲突而修改的代码。
+ 
+ 
+branch:
+ 
+git branch -a           查看所有分支。
+git branch new_branch   创建新的分支。
+git branch -d branch    删除分支。
+git checkout branch     切换当前分支。-f参数可以覆盖未提交内容
