@@ -1,0 +1,197 @@
+
+#查找当前目录下xml后缀，包含字符串“esign”的文件 -Hna分别输出文件路径，行号，及相应的文本内容
+find ./ -name "*.xml" -exec grep -Hna "esign" {} \;
+
+
+
+find . -name memcached.pid -print   #查找目录下文件名为memcache.pid的文件
+
+find ./ -type f -name "*.log"               #查找某一类型的文件
+ find . -type d -print                           #查找当前目录下面的目录
+
+
+
+$ grep "被查找的字符串" 文件名
+例子：在当前目录里第一级文件夹中寻找包含指定字符串的.in文件
+grep "thermcontact" */*.in
+
+从文件内容查找与正则表达式匹配的行：
+$ grep –e “正则表达式” 文件名
+
+查找时不区分大小写：
+$ grep –i "被查找的字符串" 文件名
+
+从根目录开始查找所有扩展名为.log的文本文件，并找出包含”ERROR”的行
+find / -type f -name "*.log" | xargs grep "ERROR"
+例子：从当前目录开始查找所有扩展名为.in的文本文件，并找出包含”thermcontact”的行
+find . -name "*.in" | xargs grep "thermcontact"
+
+
+
+-type 查找某一类型的文件，诸如：
+b - 块设备文件。
+d - 目录。
+c - 字符设备文件。
+p - 管道文件。
+l - 符号链接文件。
+f - 普通文件。
+s - socket文件
+
+
+例2
+$ find ./ -name "null_*" -exec basename {} \; | sort   #搜索文件，并只显示文件名，以升序排列。
+
+
+例3
+$find ./ -type f -name "*.log" | xargs grep -r "error"    #查找当前目录.log文件，并找出包含“error”的行 
+
+
+例1
+a,通过名字来查找
+
+[zhangy@BlackGhost ~]$ find ~ -name memcached.pid -print   #查找home目录下文件名为memcache.pid的文件
+/home/zhangy/memcached/memcached.pid
+
+[zhangy@BlackGhost ~]$ find . -name "*.pid" -print      #.代表当前目录，查找所有以pid结尾的文件
+./memcached/memcached.pid
+./.tencent/qq/95219454.pid
+
+[zhangy@BlackGhost ~]$ find ~ -name "[0-9]*.pid" -print   #查找以数字开头的所有pid文件，在这里要说[0-9]*不能匹配23，它跟一般的语言类正则不太一样，shell里面的＊可以代表一切字符（单个，多个都行），如果想匹配2345只能这样写[0-9][0-9][0-9][0-9]
+/home/zhangy/.tencent/qq/95219454.pid
+
+[zhangy@BlackGhost ~]$ find /home/zhangy/.tencent/ -name "[0-9]*.pid" -print  #在.tencent文件夹下面找pid文件
+/home/zhangy/.tencent/qq/95219454.pid
+
+b,通过文件权限来查找
+
+[zhangy@BlackGhost css]$ find ~ -perm 755 -print |more   #~代表的是$home目录，查找权限为755的文件
+/home/zhangy/www/css2/c_textshadow.html
+/home/zhangy/www/css2/c_textautospace.html
+
+
+[zhangy@BlackGhost css]$ find . -perm 700 -name "u_*" -print |more  #查找所有以产u_开头的，并且权限为700的文件
+./css2/u_length_cm.html
+./css2/u_length_px.html
+
+c,prune来忽略目录来查找
+
+[zhangy@BlackGhost download]$ find . -name "*.gz"  -prune -o \( \! -name aaa \)  -print  #查找在前目录中，不在以aaa结尾的目录中的，不以gz结尾的文件
+.
+./eaccelerator-0.9.5.3.tar
+./fix-crash-in-excerpts.patch
+./AddFeed_Widget_WordPress_Plugin.zip
+./jQuery china-addthis plugin 1.07.rar
+
+d,根据文件类型来查找文件
+
+[zhangy@BlackGhost download]$ find . -type d -print   #查找当前目录下面的目录
+.
+./ddd
+
+[zhangy@BlackGhost download]$ find . ! -type d -print  #找当前目录下面的非目录文件
+./eaccelerator-0.9.5.3.tar
+./haproxy-1.3.15.7.tar.gz
+./fix-crash-in-excerpts.patch
+
+e,根据文件所属用户和用户组来找文件
+
+[zhangy@BlackGhost download]$ find . -nouser -print  #查找当前目录中，没有归属的文件
+
+[zhangy@BlackGhost download]$ find /home/zhangy/download -user zhangy -group users -print  #查找用户组为users，所属用户为zhangy的文件
+/home/zhangy/download
+/home/zhangy/download/eaccelerator-0.9.5.3.tar
+/home/zhangy/download/haproxy-1.3.15.7.tar.gz
+
+f,根文件大小来查找
+
+[zhangy@BlackGhost download]$ find /home/zhangy/download -size +1000000c -print  #查找文件大小大于1000000字符的文件，注意+号表示大于
+/home/zhangy/download/eaccelerator-0.9.5.3.tar
+/home/zhangy/download/mmseg-0.7.3.tar.gz
+
+[zhangy@BlackGhost download]$ find /home/zhangy/download -size -10 -print  #查找文件大小小于10块的文件，注意-号表示小于，一块等于512b
+/home/zhangy/download
+/home/zhangy/download/fix-crash-in-excerpts.patch
+/home/zhangy/download/test.sql.zip
+
+g,根文件的修改时间来查找
+
+[zhangy@BlackGhost download]$ find /home/zhangy -mtime -5 -print  #5天修改过的文件，- 表示以内
+/home/zhangy/www/css2/c_textshadow.html
+/home/zhangy/www/css2/c_textautospace.html
+
+[zhangy@BlackGhost download]$ find /home/zhangy -mtime +5 -print   #查找5天前修改过的文件，+表示以前
+/home/zhangy/www/test.php
+
+[root@vmx14420 www]# find ./ -mmin -5 -print  #查找5分钟以内修改过的文件
+./cache/index.html
+
+h,exec解释
+
+[zhangy@BlackGhost download]$ find . -type f -size +1000000c -exec ls -al {} \;  #显示当前目录下面所有大于1000000的文件，exec后面执行了一个命令，｛｝这个代表文件名
+-rw-r--r-- 1 zhangy users 3624960 2009-03-08 ./eaccelerator-0.9.5.3.tar
+-rw-r--r-- 1 zhangy users 3091711 12-18 13:48 ./mmseg-0.7.3.tar.gz
+-rw-r--r-- 1 zhangy users 1191330 2009-06-26 ./pcre-7.9.tar.gz
+
+i,匹配
+
+[tank@localhost workspace]$ find ./database/ -name '*.sql' -print    #查找以sql结尾的文件
+./database/28toplearning.sql
+
+[tank@localhost workspace]$ find ./database/ -name '*.sql*' -print   #查找文件名包括sql文件
+./database/28toplearning.sql
+
+[tank@localhost workspace]$ find ./database/ -name '28*' -print      #查找以28开头的文件
+./database/28toplearning.sql
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+find 查找目录和文件
+
+find 路径 -命令参数 [输出形式]
+
+参数说明：
+路径：告诉find在哪儿去找你要的东西，
+命令参数：参数很多下面会说到
+输出形式：输出形式很多，-print,-printf,-print0,-exec,-ok,-ls反正很多自己看手册吧。
+
+说一下exec，
+-exec find命令对匹配的文件执行该参数所给出的其他linux命令。相应命令的形式为' 命令 - and' {} \;，注意{ }和\；之间的空格。
+-ok 和- exec的作用相同，只不过和会人交互而已，OK执行前会向你确认是不是要执行。
+find命令主要参数：
+-name 按照文件名查找文件。
+-perm 按照文件权限来查找文件。
+-prune 使用这一选项可以使find命令不在当前指定的目录中查找，如果同时使用了- depth选项，那么-prune选项将被find命令忽略。
+-user 按照文件属主来查找文件。
+-group 按照文件所属的组来查找文件。
+-mtime -n +n 按照文件的更改时间来查找文件， -n表示文件更改时间距现在n天以内，+n表示文件更改时间距现在n天以前。find命令还有-atime和-ctime选项，但它们都和-mtime选项
+相似，所以我们在这里只介绍-mtime选项。
+-nogroup 查找无有效所属组的文件，即该文件所属的组在/etc/groups中不存在。
+-nouser 查找无有效属主的文件，即该文件的属主在/etc/passwd中不存在。
+-newer file1 ! file2 查找更改时间比文件file1新但比文件file2旧的文件。
+-type 查找某一类型的文件，诸如：
+b - 块设备文件。
+d - 目录。
+c - 字符设备文件。
+p - 管道文件。
+l - 符号链接文件。
+f - 普通文件。
+s - socket文件
+-size n[c] 查找文件长度为n块的文件，带有c时表示文件长度以字节计。
+-depth 在查找文件时，首先查找当前目录中的文件，然后再在其子目录中查找。
+-maxdepth 查找最大目录层数 如 1，即只查找一层目录
+-fstype 查找位于某一类型文件系统中的文件，这些文件系统类型通常可以在配置文件
+/etc/fstab中找到，该配置文件中包含了本系统中有关文件系统的信息。
+-mount 在查找文件时不跨越文件系统mount点。
+-follow 如果find命令遇到符号链接文件，就跟踪至链接所指向的文件。
+-cpio 对匹配的文件使用cpio命令，将这些文件备份到磁带设备中。

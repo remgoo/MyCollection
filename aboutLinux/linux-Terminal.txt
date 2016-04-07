@@ -1,0 +1,211 @@
+﻿Linux 教程
+http://www.runoob.com/linux/linux-tutorial.html
+
+在 Linux 下遇到问题，最重要的是要自己寻求帮助，下面是三种寻求帮助的方法:
+$ man --help       ### 获取 man 的帮助
+$ info --help      ### 获取 info 的帮助
+$ ls --help        ### 获取 ls 的帮助
+
+在 Terminal（终端） 中，有许多操作技巧，这里就介绍几个简单的。 
+cd path (绝对路径强调从 / 起一直到所在路径  . 代表当前目录   .. 代表上级目录)
+
+$ ls       ### 仅列出当前目录可见文件
+$ ls -l    ### 列出当前目录可见文件详细信息
+$ ls -hl   ### 列出详细信息并以可读大小显示文件大小
+$ ls -al   ### 列出所有文件（包括隐藏）的详细信息
+
+$ pwd ###用于返回当前工作目录的名字，为绝对路径名
+
+$ mkdir folder
+$ mkdir -p folder/subfolder    ### -p 参数为当父目录存在时忽略，若不存在则建立，递归创建路径path上的所有文件夹
+
+
+
+$ rm filename      ### 删除 filename
+$ rm -i filename   ### (-i提示)删除 filename 前提示，若多个文件则每次提示
+$ rm -rf folder/subfolder/  ### 递归删除 subfolder 下所有文件及文件夹，包括 subfolder 自身(-f不提示)
+$ rm -d folder     ###  删除空文件夹
+$ rm -r dir            ### 提示删除dir文件夹，以及其包含的所有文件
+
+$ cp source dest            ### 将 source 复制到 dest
+$ cp folder/*  dest         ### 将 folder 下所有文件(不含子文件夹中的文件)复制到 dest
+$ cp -r folder  dest        ### (-r递归)将 folder 下所有文件（包含子文件夹中的所有文件）复制到 dest
+
+$ mv source  folder        ### 将 source 移动到 folder 下，完成后则为  folder/source
+$ mv -i source folder      ### 在移动时，若文件已存在则提示 **是否覆盖** 
+$ mv source dest           ### 在 dest 不为目录的前提下，重命名 source 为 dest
+
+cat 用于输出文件内容到 Terminal 。
+$ cat /etc/locale.gen     ### 输出 locale.gen 的内容 
+$ cat -n /etc/locale.gen  ### (-n显示行号)输出 locale.gen 的内容并显示行号
+
+more 与 cat 相似，当一个文档太长时用more 
+$ more /etc/locale.gen
+$ more +100 /etc/locale.gen       ### 从 100 行开始显示
+
+less 与 more 相似，不过 less 支持上下滚动查看内容，而 more 只支持逐行显示。
+$ less /etc/locale.gen
+$ less +100 /etc/locale.gen
+
+nano 是一个简单实用的文本编辑器，使用简单。
+$ nano  filename       ### 编辑 filename 文件，若文件不存在，则新打开一个文件，若退出时保存，则创建该文件
+
+$ ping locez.com    ### 通过域名 ping，若 DNS 未设置好，可能无法 ping 通
+$ ping 192.168.0.111 ### 通过ip ping
+
+reboot 为重启命令。
+# reboot         ### '$' 和 '#' 的区别在于 '$' 普通用户即可执行
+                      ### 而 '#' 为 root 用户才可执行，或普通用户使用 'sudo'
+poweroff 为关机命令。
+# poweroff  ### 马上关机 
+
+
+
+grep 主要用于返回匹配的项目，支持正则表达式。
+$ grep PATTERN filename      ### 返回所有含有 PATTERN 的行
+$ grep zh_CN /etc/locale.gen ### 返回所有含 zh_CN 的行
+
+
+mount  用于挂载一个文件系统，需要 root 用户执行。
+umount  与 mount 相反，是卸载一个挂载点，即取消该入口需要 root 用户执行。
+
+
+tar
+tar 主要用于创建归档文件，和解压归档文件，其本身是没有压缩功能的，但可以调用 gzip 、 bzip2 进行压缩处理。
+参数解释：
+-c 创建归档
+-x 解压归档
+-v 显示处理过程
+-f 目标文件，其后必须紧跟 目标文件
+-j 调用 bzip2 进行解压缩
+-z 调用 gzip 进行解压缩
+-t 列出归档中的文件
+
+$ tar -cvf filename.tar .       ### 将当前目录所有文件归档，但不压缩，注意后面有个 ’.‘ ，不可省略，代表当前目录的意思 
+$ tar -xvf filename.tar         ### 解压 filename.tar 到当前文件夹
+$ tar -cvjf filename.tar.bz2 .  ### 使用 bzip2 压缩
+$ tar -xvjf  filename.tar.bz2   ### 解压 filename.tar.bz2 到当前文件夹
+$ tar -cvzf filename.tar.gz     ### 使用 gzip  压缩
+$ tar -xvzf filename.tar.gz     ### 解压 filename.tar.gz 到当前文件夹
+$ tar -tf   filename            ### 只查看 filename 归档中的文件，不解压
+
+
+ln
+ln 主要用于在两个文件中创建链接，链接又分为 Hard Links (硬链接)和 Symbolic Links (符号链接或软链接)，其中默认为创建硬链接，使用 -s 参数指定创建软链接。
+硬链接主要是增加一个文件的链接数，只要该文件的链接数不为 0 ，该文件就不会被物理删除，所以删除一个具有多个硬链接数的文件，必须删除所有它的硬链接才可删除。
+软链接简单来说是为文件创建了一个类似快捷方式的东西，通过该链接可以访问文件，修改文件，但不会增加该文件的链接数，删除一个软链接并不会删除源文件，即使源文件被删除，软链接也存在，当重新创建一个同名的源文件，该软链接则指向新创建的文件。
+硬链接只可链接两个文件，不可链接目录，而软链接可链接目录，所以软链接是非常灵活的。
+$ ln source dest       ### 为 source 创建一个名为 dest 的硬链接
+$ ln -s source dest    ### 为 source 创建一个名为 dest 的软链接
+
+chown
+chown 用于改变一个文件的所有者及所在的组。
+# chown user filename        ### 改变 filename 的所有者为 user
+# chown user:group filename  ### 改变 filename 的所有者为 user，组为 group
+# chown -R root folder       ### 改变 folder 文件夹及其子文件的所有者为 root
+
+
+chmod
+chmod 永远更改一个文件的权限，
+主要有 读取 、 写入 、 执行 ，三种权限，其中 所有者 、 用户组 、 其他 各占三个，因此 ls -l 可以看到如下的信息
+# ls -l
+-rwxr--r-- 1 locez users   154 Aug 30 18:09 filename
+其中 r=read ， w=write ， x=execute
+# chmod +x filename        ### 为 user ，group ，others 添加执行权限
+# chmod -x filename        ### 取消 user ， group ，others 的执行权限
+# chmod +w filename        ### 为 user 添加写入权限
+# chmod ugo=rwx filename   ### 设置 user ，group ，others 具有 读取、写入、执行权限
+# chmod ug=rw filename     ### 设置 user ，group 添加 读取、写入权限
+# chmod ugo=--- filename   ### 取消所有权限
+
+chmod a+x filename ### 为所有用户 添加执行权限
+chmod u+w filename ### 为当前的用户 添加写权限
+chmod a=rwx filename   ### 设置所有用户具有 读取、写入、执行权限
+chmod u=rwx,g=rx,o=x filename  ###给用户分配读、写、执行(7)的权限，给组分配读、执行(5)的权限，给其他分配执行(1)的权限
+
+
+选择参数：
+chmod<权限范围>+<权限设置> 使权限范围内的目录或者文件具有指定的权限
+chmod<权限范围>-<权限设置>  删除权限范围的目录或者文件的指定权限
+chmod<权限范围>=<权限设置> 设置权限范围内的目录或者文件的权限为指定的值
+权限范围：
+u ：目录或者文件的当前的用户
+g ：目录或者文件的当前的群组
+o ：除了目录或者文件的当前用户或群组之外的用户或者群组
+a ：所有的用户及群组
+权限代号：
+r ：读权限，用数字4表示
+w ：写权限，用数字2表示
+x ：执行权限，用数字1表示
+- ：删除权限，用数字0表示
+
+
+
+find
+find 也用于查找文件，但更为强大，支持正则，并且可将查找结果传递到其他命令。
+$ find . -name PATTERN    ### 从当前目录查找符合 PATTERN 的文件
+$ find /home -name PATTERN -exec ls -l {} \;  # 从 /home 文件查找所有符合 PATTERN 的文件，并交由 ls 输出详细信息 
+
+
+wget
+wget 是一个下载工具，简单强大。
+$ wget -O newname.md https://github.com/LCTT/TranslateProject/blob/master/README.md     ### 下载 README 文件并重命名为 newname.md
+$ wget -c url     ### 下载 url 并开启断点续传
+
+
+
+sh [-nvx] scripts.sh
+[dmtsai@study ~]$ sh [-nvx] scripts.sh
+選項與參數：
+-n  ：不要執行 script，僅查詢語法的問題；
+-v  ：再執行 sccript 前，先將 scripts 的內容輸出到螢幕上；
+-x  ：將使用到的 script 內容顯示到螢幕上，這是很有用的參數！
+
+範例一：測試 dir_perm.sh 有無語法的問題？
+[dmtsai@study ~]$ sh -n dir_perm.sh  # 若語法沒有問題，則不會顯示任何資訊！
+
+範例二：將 show_animal.sh 的執行過程全部列出來～
+[dmtsai@study ~]$ sh -x show_animal.sh 
+
+
+
+
+
+Linux任务前后台的切换
+Shell支持作用控制，有以下命令实现前后台切换：
+　　1. command& 让进程在后台运行
+　　2. jobs 查看后台运行的进程
+　　3. fg %n 让后台运行的进程n到前台来
+　　4. bg %n 让进程n到后台去
+      5. kill %n 杀死job
+　　PS:"n"为jobs命令查看到的job编号，不是进程编号.
+　　fg、bg、jobs、&、ctrl + z都是跟系统任务有关的，虽然现在基本上不怎么需要用到这些命令，但学会了也是很实用的.
+
+一、& 最经常被用到
+　　这个用在一个命令的最后，可以把这个命令放到后台执行
+二、ctrl + z
+　　可以将一个正在前台执行的命令放到后台，并且暂停
+三、jobs
+　　查看当前有多少在后台运行的命令
+四、fg
+　　将后台中的命令调至前台继续运行
+　　如果后台中有多个命令，可以用 fg %jobnumber将选中的命令调出，%jobnumber是通过jobs命令查到的后台正在执行的命令的序号(不是pid)。
+五、bg
+　　将一个在后台暂停的命令，变成继续执行
+　　如果后台中有多个命令，可以用bg %jobnumber将选中的命令调出，%jobnumber是通过jobs命令查到的后台正在执行的命令的序号(不是pid)。
+实例：
+假设你发现前台运行的一个程序需要很长的时间，但是需要干其他的事情，你就可以用 Ctrl-Z ，终止这个程序，然后可以看到系统提示：
+[1]+ Stopped /root/bin/rsync.sh
+如果没有此提示，则用 jobs 命令查看任务：
+#jobs
+[1]+ suspended /root/bin/rsync.sh &
+然后我们可以把程序调度到后台执行：（bg 后面的数字为作业号）
+#bg 1
+[1]+ /root/bin/rsync.sh &
+用 jobs 命令查看正在运行的任务：
+#jobs
+[1]+ Running /root/bin/rsync.sh &
+如果想把它调回到前台运行，可以用
+#fg 1
+/root/bin/rsync.sh
+这样，你在控制台上就只能等待这个任务完成了。 
