@@ -3,7 +3,7 @@
 ======
 #### [Linux常用命令收集](aboutLinux/README.md)
 - Linux
+- VIM
 - Bash
-- Vim
 ======
 #### [git常用命令收集](aboutGit/README.md)
