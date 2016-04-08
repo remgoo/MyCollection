@@ -1,6 +1,6 @@
 {
   "name": "Mycollection",
   "tagline": "关于IT，关于软件，关于开发一些优秀文章个人收集",
-  "body": "### MyCollection\r\n`关于IT，关于软件，关于开发`一些优秀文章个人收集\r\n======\r\n### [Linux常用命令收集](aboutLinux/README.md)\r\n- Linux\r\n- Bash\r\n- VIM\r\n======\r\n### [git常用命令收集](aboutGit/README.md)\r\n======",
+  "body": "# MyCollection\r\n##`关于IT，关于软件，关于开发`一些优秀文章个人收集\r\n======\r\n### [Linux常用命令收集](aboutLinux/README.md)\r\n- Linux\r\n- Bash\r\n- VIM\r\n\r\n======\r\n### [git常用命令收集](aboutGit/README.md)\r\n\r\n======",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
