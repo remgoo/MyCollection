@@ -143,8 +143,11 @@ x ：执行权限，用数字1表示
 
 find
 find 也用于查找文件，但更为强大，支持正则，并且可将查找结果传递到其他命令。
-$ find . -name PATTERN    ### 从当前目录查找符合 PATTERN 的文件
+$ find . -name test.log                                    ### 从当前目录查找符合 PATTERN 的文件
 $ find /home -name PATTERN -exec ls -l {} \;  # 从 /home 文件查找所有符合 PATTERN 的文件，并交由 ls 输出详细信息 
+
+#最常用的查询命令 ，查找当前目录.log文件，并找出包含“error”的行
+$find ./ -type f -name "*.log" | xargs grep -r "error" 
 
 
 wget
@@ -167,6 +170,24 @@ sh [-nvx] scripts.sh
 範例二：將 show_animal.sh 的執行過程全部列出來～
 [dmtsai@study ~]$ sh -x show_animal.sh 
 
+
+
+# top和free查看内存使用的时候使用的命令
+查看内存
+>free
+
+查看内存 M为单位
+>free -m
+
+查看内存G为单位
+>gree -g
+
+
+top查看，然后进入命令界面之后，可以输入
+>top
+>1（查看cpu个数）
+>shift+p（查看cpu使用排行）
+>shift+p（查看内存使用排行）
 
 
 
