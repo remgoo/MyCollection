@@ -28,7 +28,9 @@ Nicename: linux
 好习惯 5使用转义序列来管理较长的输入
 好习惯 5 的示例：将反斜杠用于长输入
 > $ cd tmp/a/b/c || \ 
+
 > $ mkdir -p tmp/a/b/c && \ 
+
 > $ tar xvf -C tmp/a/b/c ~/archive.tar 
 
 查找文件
