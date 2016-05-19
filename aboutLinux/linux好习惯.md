@@ -12,21 +12,24 @@ Nicename: linux
 好习惯 2 更改路径；不要移动存档
 好习惯 2 的示例：使用选项 -C 来解压缩 .tar 存档文件
 > $ tar xvf -C tmp/a/b/c newarc.tar.gz
+
 相对于将存档文件移动到您希望在其中解压缩它的位置，切换到该目录，然后才解压缩它，养成使用 -C 的习惯则更加可取——当存档文件位于其他某个位置时尤其如此。
 
 好习惯 3 将命令与控制操作符组合使用
 好习惯 3 的示例：将命令与控制操作符组合使用
 > $ cd tmp/a/b/c && tar xvf ~/archive.tar
+
 好习惯 3 的另一个示例：将命令与控制操作符组合使用
 > $ cd tmp/a/b/c || mkdir -p tmp/a/b/c
+
 好习惯 3 的组合示例：将命令与控制操作符组合使用
 > $ cd tmp/a/b/c || mkdir -p tmp/a/b/c && tar xvf -C tmp/a/b/c ~/archive.tar
 
 好习惯 5使用转义序列来管理较长的输入
 好习惯 5 的示例：将反斜杠用于长输入
-> $ cd tmp/a/b/c || \
-> $ mkdir -p tmp/a/b/c && \
-> $ tar xvf -C tmp/a/b/c ~/archive.tar
+> $ cd tmp/a/b/c || \ 
+> $ mkdir -p tmp/a/b/c && \ 
+> $ tar xvf -C tmp/a/b/c ~/archive.tar 
 
 查找文件
 > $ locate filename
