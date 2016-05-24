@@ -1,0 +1,69 @@
+ctrl+/、ctrl+shift+/分别未行注释和块注释
+行操作：ctrl+alt+↑、ctrl+alt+↓向上或者向下交换两行，ctrl+enter，光标后插入空行，ctrl+d选择相似
+列编辑：按住shift点击鼠标右键拖拽
+
+
+
+多个光标：按住Cmd（Windows系统按住ctrl）可以在同一时间轻松的编辑多条代码。点击鼠标点击目标代码。
+重新打开关闭的标签：和谷歌浏览器一样，如果你不小心关闭了某个标签页并想重新打开它，
+你可以按下Shift+Cmd+T（Windows系统下，按下Shift+ctrl+T）。如果你连续点击以上按键，ST将会按照关闭的先后顺序重新打开标签页。
+快速开启文档：这可能就是ST中我最喜欢的功能。按住Cmd+T（Wiondows系统下，按住ctrl+T）就会打开一个文本框，你可以在文本框内键入目标文件，系统就在项目中搜索文件的位置。这样你就不用再次使用文件目录列表。
+将当前行上移/下移：你可以按住Ctrl+Cmd+Up/Down上移/下移当前行（感谢draftable）
+
+
+
+
+Sublime Text 2 是支持類似 Vim 的鍵盤操作的. 在此分享下配置過程.
+打開配置文件: “Settings-User”
+鼠標操作: 點擊 “Preferences” 菜單下的 “Settings-User” 項;
+編輯配置文件: “Settings-User”
+在 “Settings-User” 配置文件中添加以下內容:
+{
+    "ignored_packages":[]
+}
+
+ConvertToUTF8
+
+
+常用插件
+1、ConvertToUTF8　　　　     支持多种编码，解决中文乱码问题。
+2、Bracket Highlighter　　      用于高亮匹配括号、引号、html标签。
+4、Emmet 　　　　　　　　 　 快速编写HTML，原 Zen Coding。
+5、启用 Vim 模式
+      在菜单栏中： Preferences -> Setting - User ，即可打开配置文件进行编辑，将 ignored_packages 项的[]里面内容清空：
+      这样就启用了 Vim 模式，按 Esc 退出编辑模式，即进入了 Vim 模式。
+     vim 模式快捷键说明请查看 http://feliving.github.io/Sublime-Text-3-Documentation/vintage.html
+
+HTML+CSS+JAVASCRIPT+JSON快速格式化
+sublime的HTML-CSS-JS Prettify格式化插件
+ctrl+shift+h 格式化
+
+Emmet插件：
+html:5
+div#foo
+div.bar#foo
+定义HTML元素的内容h1{foo}
+属性和内容 a[href=#]{baidu}
+
+添加多个class到一个元素 
+div.one.two.three
+
+定义多个元素  要定义多个元素，可以使用*符号。比如，ul>li*3
+ul>li*3
+定义多个带属性的元素
+ul>li#item$*3
+ul>li#item$*4>a[href="www.baidu.com"]{baidu$$}
+
+7. 自动列表记数
+如果你需要按顺序生成HTML元素，这个技巧你一定喜欢，
+使用$符号可以帮助你生成一系列数字，支持class，id，属性，内容等等。
+ul>li#item${text$$}*4
+ul>li#item$*4>a[href=#]{text$$}
+
+嵌套 
+> 子节点：在DOM树下一层添加创建一个元素
++ 同级别：在DOM树同一层添加创建一个元素
+^ 向上层：向上一层添加创建创建一个元素。
+
+分组
+(.foo>h1)+(.bar>h2)

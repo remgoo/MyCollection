@@ -19,7 +19,14 @@ $ pwd ###用于返回当前工作目录的名字，为绝对路径名
 $ mkdir folder
 $ mkdir -p folder/subfolder    ### -p 参数为当父目录存在时忽略，若不存在则建立，递归创建路径path上的所有文件夹
 
+centos 查看版本
+$ uname -a
+$ cat /proc/release
+以下方法适用于RedHat,CentOS
+root@MyMail ~ # cat /etc/redhat-release
+CentOS release 5.4 (Final)
 
+Centos 7开始用 systemctl 管理系统服务自动启动。
 
 $ rm filename      ### 删除 filename
 $ rm -i filename   ### (-i提示)删除 filename 前提示，若多个文件则每次提示
@@ -135,9 +142,14 @@ o ：除了目录或者文件的当前用户或群组之外的用户或者群组
 a ：所有的用户及群组
 权限代号：
 r ：读权限，用数字4表示
-w ：写权限，用数字2表示
-x ：执行权限，用数字1表示
+w ：写权限，用数字2表示数字1表示
 - ：删除权限，用数字0表示
+
+
+locate 安装
+yum install mlocate
+updatedb
+$ locate filename
 
 
 
