@@ -1,14 +1,18 @@
 
+#最常用的查询命令 ，查找当前目录.log文件，并找出包含“error”的行 
+$find ./ -type f -name "*.log" | xargs grep -r "error"    
+
 #查找当前目录下xml后缀，包含字符串“esign”的文件 -Hna分别输出文件路径，行号，及相应的文本内容
 find ./ -name "*.xml" -exec grep -Hna "esign" {} \;
 
 
+find . -name memcached.pid              #查找目录下文件名为memcache.pid的文件
+find ./ -type f -name "*.log"                #查找某一类型的文件
+find . -type d -print                             #仅仅查找当前目录下面的文件夹
 
-find . -name memcached.pid -print   #查找目录下文件名为memcache.pid的文件
-
-find ./ -type f -name "*.log"               #查找某一类型的文件
- find . -type d -print                           #查找当前目录下面的目录
-
+如果安装了locate可以用locate 查文件比较快 
+$ updatedb   #更新 locate 索引数据
+$locate test.log
 
 
 $ grep "被查找的字符串" 文件名

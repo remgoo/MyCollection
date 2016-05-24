@@ -1,3 +1,4 @@
+﻿
 ﻿Linux 教程
 http://www.runoob.com/linux/linux-tutorial.html
 
@@ -219,5 +220,7 @@ Shell支持作用控制，有以下命令实现前后台切换：
 [1]+ Running /root/bin/rsync.sh &
 如果想把它调回到前台运行，可以用
 #fg 1
-/root/bin/rsync.sh
+
 这样，你在控制台上就只能等待这个任务完成了。 
+
+end
