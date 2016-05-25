@@ -1,0 +1,59 @@
+﻿
+
+CentOS 7 systemctl、firewalld
+
+一、CentOS7 systemctl
+
+在CentOS7中，进行chkconfig命令操作时会发现有类似“systemctl.....”的提示，systemctl可以简单实现service和chkconfig的结合，这样通过一个命令就可以实现两个命令的功能。
+
+systemctl命令的基本操作格式是：
+
+> systemctl [OPTIONS...]  {COMMAND}...
+以nginx服务为例，实现停止、启动、重启的动作如下：
+
+> systemctl stop    nginx.service
+
+> systemctl start   nginx.service
+
+> systemctl restart nginx.service
+检查服务状态
+
+> systemctl status nginx.service
+使服务开机启动
+
+> systemctl enable nginx.service
+取消服务开机启动
+
+> systemctl disable nginx.service
+
+
+Centos7 关闭防火墙
+
+CentOS 7.0默认使用的是firewall作为防火墙，使用iptables必须重新设置一下
+
+1、直接关闭防火墙
+
+> systemctl stop firewalld.service #停止firewall
+
+> systemctl disable firewalld.service #禁止firewall开机启动
+
+2、设置 iptables service
+
+>yum -y install iptables-services
+
+如果要修改防火墙配置，如增加防火墙端口3306
+
+>vi /etc/sysconfig/iptables 
+
+增加规则
+
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 3306 -j ACCEPT
+
+保存退出后
+
+>systemctl restart iptables.service #重启防火墙使配置生效
+
+>systemctl enable iptables.service #设置防火墙开机启动
+
+最后重启系统使设置生效即可。
+
