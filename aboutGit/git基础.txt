@@ -24,6 +24,10 @@ GIT 使用 SHA-1 哈希码（40个字符）来标识提交，同时保证本次�
 3） 用 git commit a.txt -m "ha"  提交该文件，状态变为“已提交”
 
 
+git add . stages new and modified, without deleted
+git add -u stages modified and deleted, without new
+git add -A stages All
+
 
 Git 提供了一个叫做 git config 的工具（译注：实际是 git-config 命令，只不过可以通过 git 加一个名字来呼叫此命令。），专门用来配置或读取相应的工作环境变量。而正是由这些环境变量，决定了 Git 在各个环节的具体工作方式和行为。这些变量可以存放在以下三个不同的地方：
 
