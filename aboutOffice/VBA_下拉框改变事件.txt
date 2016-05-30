@@ -1,0 +1,13 @@
+
+'Excel一级下拉框改变值之后，清空级联下拉框的值
+Private Sub Worksheet_Change(ByVal Target As Range)
+If Target.Row = 6 And Target.Column = 3 Then
+'MsgBox "你的代码"
+'"清除指定单元格区域中的内容"
+ Worksheets(1).Cells(20, 2).Value = ""
+ Worksheets(1).Cells(21, 2).Value = ""
+ Worksheets(1).Cells(22, 2).Value = ""
+ Worksheets(1).Cells(23, 2).Value = ""
+ Worksheets(1).Cells(24, 2).Value = ""
+End If
+End Sub
