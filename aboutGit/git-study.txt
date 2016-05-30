@@ -3,10 +3,10 @@ tar czf `date '+%Y%m%d'peter`.tgz `git diff --name-only`
 -- this command should be run before run the following two commands
 
 
-git add -u 					(add all update before commit)
+git add -u 				(add all update before commit)
 git commit -m "update main page by peter"	(commit with a message)
 git log
-git log -2 					(查最近两次的SHA)
+git log -2 				(查最近两次的SHA)
 
 *************************
 h、比较上次提交commit和上上次提交
@@ -108,9 +108,11 @@ rm -f ./.git/index.lock
 命令行里git的命令列表以及解释：
 git clone <address>：复制代码库到本地。
 git add <file> ...：添加文件到代码库中。
-git add . //这个可以把所以文件和文件夹都放入提交缓存中,"."表示全部
+git add . //这个可以把新建的所以文件和文件夹都放入提交缓存中,"."表示全部
+git add -a  修改和删除的文件会自动标记, 但对新建文件就不行
 git rm <file> ...：删除代码库的文件。
 git commit -m <message>：提交更改，在修改了文件以后，使用这个命令提交修改。
+git commit -a -m <message>：提交修改和删除的更改，合并命令。
 git pull：从远程同步代码库到本地。
 git push：推送代码到远程代码库。
 git branch：查看当前分支。带*是当前分支。

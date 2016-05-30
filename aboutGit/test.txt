@@ -1,0 +1,37 @@
+怎样把git add 和 git commit 合并为一步操作
+
+好以下是操作方法：
+
+一，常规的操作
+
+1, 首先按需修改文件
+
+echo >> lz66303.txt
+
+2, 然后按需提交被修改的文件到HEAD缓存区
+
+git add lz66303.txt
+
+3, 再把这个修改记录到分支中
+
+git commit -m"This is a commit created by lz66303."
+
+二，合并的操作
+
+1, 首先按需修改文件
+
+echo >> lz66303.txt
+
+2, 然后按需提交被修改的文件到HEAD缓存区,并把这个修改记录到分支中
+
+git commit -am"This is a commit created by lz66303."
+
+总结
+
+其实这人喜爱的命令git commit -am""也不是那么万能呀！
+
+好我们查看一下帮助命令git commit -h
+
+-a, --all    commit all changed files(提交所有被修改的文件)
+
+比如：你有新添加的文件这条命令就不适用。
