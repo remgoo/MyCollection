@@ -10,6 +10,8 @@ $ ls --help        ### 获取 ls 的帮助
 在 Terminal（终端） 中，有许多操作技巧，这里就介绍几个简单的。 
 cd path (绝对路径强调从 / 起一直到所在路径  . 代表当前目录   .. 代表上级目录)
 
+
+
 $ ls       ### 仅列出当前目录可见文件
 $ ls -l    ### 列出当前目录可见文件详细信息
 $ ls -hl   ### 列出详细信息并以可读大小显示文件大小
@@ -28,6 +30,22 @@ root@MyMail ~ # cat /etc/redhat-release
 CentOS release 5.4 (Final)
 
 Centos 7开始用 systemctl 管理系统服务自动启动。
+$ service stop firewalld
+$ systemctl stop firewalld
+$ systemctl stop firewalld.service
+
+
+建立新目录：mkdir
+建立新目录所有路径文件夹：mkdir -p /opc/test1/test2/test3 
+删除『空』的目录：rmdir
+复制档案或目录：cp -a /folder /folder (备份常用 -a)
+复制档案或目录：cp -r /folder /folder (-r 可能会变权限)
+移动档案与目录，或更名：mv 
+删除档案或目录：rm file（目录    -r 递归 -f 不提示）
+重命名档案或目录: mv name newname
+将/a目录移动到目录/b下，并重命名为c: mv /a /b/c
+
+
 
 $ rm filename      ### 删除 filename
 $ rm -i filename   ### (-i提示)删除 filename 前提示，若多个文件则每次提示
@@ -42,6 +60,17 @@ $ cp -r folder  dest        ### (-r递归)将 folder 下所有文件（包含子
 $ mv source  folder        ### 将 source 移动到 folder 下，完成后则为  folder/source
 $ mv -i source folder      ### 在移动时，若文件已存在则提示 **是否覆盖** 
 $ mv source dest           ### 在 dest 不为目录的前提下，重命名 source 为 dest
+
+
+一页一页的显示档案内容：more
+比 more 更好的是，他可以往前翻页：less
+由第一行开始显示档案内容：cat
+从最后一行开始显示：tac
+只看头几行：head
+只看尾几行：tail
+修改档案时间或新建档案：touch
+想显示内容写入文件: echo "test text" > test.txt
+想显示内容追加到文件尾: echo "append text" >> test.txt
 
 cat 用于输出文件内容到 Terminal 。
 $ cat /etc/locale.gen     ### 输出 locale.gen 的内容 
@@ -152,6 +181,31 @@ yum install mlocate
 updatedb
 $ locate filename
 
+#查找当前目录下.log后缀文件，并找出包含“error”的行 
+find ./ -type f -name "*.log" | xargs grep -r "error"    
+
+
+locate 安装
+yum install mlocate
+updatedb
+$ locate filename
+
+#查看命令相关的所以文件
+$ locate vim
+
+#查看命令的所以path
+$ whereis vim 
+
+#查看命令使用的是那个path
+$ which vim
+
+
+把当前一个文件copy到远程
+scp /home/daisy/full.tar.gz root@172.19.2.75:/root
+然后会提示你输入另外那台172.19.2.75主机的root用户的登录密码，就开始copy了。 
+
+把文件从远程主机copy到当前系统
+scp root@172.19.2.75:/root/full.tar.gz /home/daisy/full.tar.gz 
 
 
 find

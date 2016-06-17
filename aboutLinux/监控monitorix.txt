@@ -1,0 +1,25 @@
+
+http://www.monitorix.org/doc-redhat.html
+
+
+Installation on a RedHat/CentOS Linux
+Install first the required packages.
+
+# yum install rrdtool rrdtool-perl perl-libwww-perl perl-MailTools perl-MIME-Lite perl-CGI perl-DBI 
+perl-XML-Simple perl-Config-General perl-HTTP-Server-Simple perl-IO-Socket-SSL
+
+# rpm -ivh http://www.monitorix.org/monitorix-n.n.n-1.noarch.rpm
+(where n.n.n is the latest version)
+rpm -ivh http://www.monitorix.org/monitorix-3.8.1-1.noarch.rpm
+
+Once succesfully installed, please take a look into the configuration file /etc/monitorix/monitorix.conf to set the options according your system and enable or disable graphs.
+
+Finally start Monitorix with:
+# service monitorix start
+
+At this point, Monitorix will start gathering the system information based on its configuration file and after some minutes, you should be able to see the results from your favorite browser pointing it at:
+http://localhost:8080/monitorix/
+
+Notes after installation
+If your system has SELinux enabled it is possible your Monitorix graphs won't be visible and you get lot of messages in /var/log/audit/audit.log and/or in /var/log/messages about access denied to the RRD database files.
+Take the proper actions to remedy this situation.
